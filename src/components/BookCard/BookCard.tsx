@@ -1,15 +1,22 @@
 import React from 'react'
+import './BookCard.scss'
+import { IBookCardProps } from './BookCard.props'
 
-function BookCard() {
+function BookCard({ book }: IBookCardProps) {
+
   return (
     <div className="card">
       <div className="img">
-        <img src="https://img.freepik.com/free-vector/hand-drawn-flat-design-stack-books-illustration_23-2149341898.jpg?w=2000" />
+        {book.volumeInfo.imageLinks.thumbnail ? <img src={book.volumeInfo.imageLinks.thumbnail} alt="" /> : null}
       </div>
       <div className="card-body">
-        <p className='title'>Title</p>
-        <p className='body'>Body</p>
-        <p className='author'>Author</p>
+        <div className='category-card'>{book.volumeInfo.categories ? book.volumeInfo.categories.map((item) => <p key={item}>{item}</p>) : null}</div>
+        <br />
+        <p className='title'>{book.volumeInfo.title}</p>
+        <br />
+        <div className='author'>
+          {book.volumeInfo.authors ? book.volumeInfo.authors.map((item) => <p key={item}>{item}</p>) : null}
+        </div>
       </div>
     </div>
   )

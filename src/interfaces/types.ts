@@ -27,6 +27,7 @@ interface ImageLinks {
 
 interface IVolumeInfo {
     title: string;
+    subtitle?: string;
     authors: string[];
     publisher: string;
     publishedDate: string;
@@ -77,4 +78,10 @@ export interface IBook {
     selfLink: string;
     volumeInfo: IVolumeInfo;
     saleInfo: SaleInfo;
+}
+
+export interface IBookResponse {
+    items: IBook[];
+    kind: string;
+    totalItems: number
 }

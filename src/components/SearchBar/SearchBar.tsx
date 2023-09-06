@@ -1,19 +1,30 @@
 import { useState } from 'react'
 import axios from "axios"
+
+import { useDispatch, useSelector } from 'react-redux'
+import { setBook, setTerm } from '../../reducers/book'
+import { RootState } from '../../store'
 function SearchBar() {
-  const [term, setTerm] = useState<string>('')
-  const [error, setError] = useState<string>('')
+  const term = useSelector((state: RootState) => state.book.term)
+  const [_, setError] = useState<string>('')
+  const dispatch = useDispatch()
   const submitData = async () => {
     try {
-      const apiKey = 'AIzaSyAkpJ1ssndcueZp0dmwhvjmMuOGstIC2Po';
-      const orderBy = 'relavence'
-      const url = `https://www.googleapis.com/books/v1/volumes?q=${term}+subject:computers&key=${apiKey}`
-      // const url = `https://www.googleapis.com/books/v1/volumes?q=${term}&key=${apiKey}num=50`;
-      const response = await axios.get(url);
-      console.log(response);
-
+      const apiKey: string = 'AIzaSyAkpJ1ssndcueZp0dmwhvjmMuOGstIC2Po';
+      const orderBy: string = 'relevance'
+      const category: string = "computers"
+      const url: string = `https://www.googleapis.com/books/v1/volumes?`
+      const response = await axios.get(url, {
+        params: {
+          q: category === "all" ? `${term}+subject:${category}` : term,
+          key: apiKey,
+          maxResults: 30,
+          orderBy: orderBy
+        }
+      });
+      return response.data
     } catch (error) {
-      console.error(error);
+      console.log(error);
     }
   }
 
@@ -22,7 +33,8 @@ function SearchBar() {
       setError('The book name is required to search book')
       return
     }
-    await submitData()
+    const data = await submitData()
+    dispatch(setBook(data))
   }
 
   return (
@@ -35,7 +47,7 @@ function SearchBar() {
             if (e.key === "Enter") {
               await onSearch()
             }
-          }} value={term} onChange={(e) => setTerm(e.target.value)} />
+          }} value={term} onChange={(e) => dispatch(setTerm(e.target.value))} />
         </label>
         <div className="btn">
           <button onClick={onSearch}>Search</button>

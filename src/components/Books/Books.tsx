@@ -1,11 +1,16 @@
 import React from 'react'
-
+import SearchBar from '../SearchBar/SearchBar'
+import { SectionWrapper } from "../../hoc"
+import BookCard from '../BookCard/BookCard'
+import Base from '../../layouts/Base'
 function Books() {
     return (
-        <div className='books'>
-            <h1>Books</h1>
-        </div>
+        <Base>
+            <BookCard />
+            <BookCard />
+            <BookCard />
+        </Base>
     )
 }
 
-export default Books
+export default SectionWrapper(Books)

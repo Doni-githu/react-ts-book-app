@@ -1,9 +1,10 @@
 import { Route, Routes } from "react-router-dom"
-
+import Books from "../Books/Books"
+import BookDetail from "../BookDetail/BookDetail"
 const AppRouter = () => {
     return <Routes>
-        <Route path="/" element={<h1>Books</h1>} />
-        <Route path="/:id" element={<h1>Book</h1>} />
+        <Route path="/" element={<Books />} />
+        <Route path="/:id" element={<BookDetail />} />
     </Routes>
 }
 

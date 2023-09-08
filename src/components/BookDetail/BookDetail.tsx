@@ -5,6 +5,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { startGetOneBook, successGetOneBook } from '../../reducers/book';
 import Base from '../../layouts/Base';
 import { RootState } from '../../store';
+import './BookDetail.scss'
+import word from '../../utils/word';
 
 
 
@@ -22,18 +24,18 @@ function BookDetail() {
   return (
     <Base>
       {book ?
-        <div className='d-flex' style={{ gap: '20px' }}>
-          <div className="left" style={{ width: '50%' }}>
-            <div>
-              <img style={{ width: '100%', objectFit: 'contain' }} src={book.volumeInfo.imageLinks.thumbnail} alt="" />
+        <div className='d-flex detail'>
+          <div className="left">
+            <div className='img'>
+              <img src={book.volumeInfo.imageLinks.thumbnail} alt="" />
             </div>
           </div>
-          <div style={{ width: '50%' }}>
-            <h1>{book.volumeInfo.title}</h1>
-            {book.volumeInfo.description}
-            <p>Author {book.volumeInfo.authors.map((item) => item)}</p>
+          <div className='right'>
+            <p className='fs-1'>{book.volumeInfo.title}</p>
+            <p>{book.volumeInfo.description}</p>
+            <p>Author{book.volumeInfo.authors.length > 1 ? 's' : ''} {word(book.volumeInfo.authors)}</p>
             {book.volumeInfo.categories ? <>
-              <p>Category <ins>{book.volumeInfo.categories.map(item => item)}</ins></p>
+              <p>Categor{book.volumeInfo.categories.length > 1 ? 'ies' : 'y'} <ins>{book.volumeInfo.categories.map(item => item)}</ins></p>
             </> : null}
           </div>
         </div> : null}

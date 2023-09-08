@@ -2,7 +2,7 @@ import { ReactNode } from "react";
 
 
 export interface IBaseProps {
-    children: ReactNode
+    children: ReactNode,
 }
 
 export interface ReadingMode {

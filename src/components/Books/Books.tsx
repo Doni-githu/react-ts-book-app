@@ -6,7 +6,9 @@ import { useState } from "react"
 import { RootState } from "../../store"
 import './Books.scss'
 import search from "../../utils/search"
-import { addBooks, setBook } from "../../reducers/book"
+import { startSearchBooks, successGotBooks, failurGetBooks, setBook } from "../../reducers/book"
+import { ISearchUtilProps } from "../../interfaces/types"
+import { Loader } from "../../uiComponents"
 
 function Books() {
     const [isLoading, setIsLoading] = useState<boolean>(false)
@@ -14,18 +16,27 @@ function Books() {
     const dispatch = useDispatch()
     return (
         <Base>
-            <h1>Books found {book.books.totalItems}</h1>
-            <div className="books">
-                {book.books.items.map((item, index) => (
+            <h1 className="text-center">Books found {book.books.totalItems}</h1>
+            <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                {!book.isLoading ? book.books.items.map((item, index) => (
                     <BookCard key={index} book={item} />
-                ))}
+                )) :
+                    <div style={{ textAlign: 'center', marginTop: '2rem', width: '100%' }}>
+                        <Loader />
+                    </div>}
             </div>
             {book.books.totalItems !== 0 ? <>
-                <div className="load_more">
-                    <button onClick={async () => {
+                <div className="w-100 d-flex justify-content-center">
+                    <button className="btn btn-primary" onClick={async () => {
                         setIsLoading(true)
-                        const data = await search(book.term, book.books.items.length)
-                        dispatch(addBooks(data))
+                        const payload: ISearchUtilProps = {
+                            term: book.term,
+                            category: book.category,
+                            orderBy: book.orderBy,
+                            length: book.books.items.length,
+                        }
+                        const data = await search(payload)
+                        dispatch(successGotBooks(data.items))
                         setIsLoading(false)
                     }}>{isLoading ? 'Loading...' : 'Load more'}</button>
                 </div>

@@ -1,46 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import './customSelect.scss'
-interface Option {
-    title: string;
-}
-
-interface ICustomSelectProps {
-    options: Option[]
-}
+import { ICustomSelectProps, Option } from '../../interfaces/types';
 
 
-const CustomSelect = ({ options }: ICustomSelectProps): JSX.Element => {
-    const [isOpen, setIsOpen] = useState(false);
-    const [selectedOption, setSelectedOption] = useState<Option>(options[0]);
-
-
-    options = options.filter((item) => item.title !== selectedOption.title)
-
-    const toggleSelect = () => {
-        setIsOpen(!isOpen);
-    };
-
-    const selectOption = (option: Option) => {
-        setSelectedOption(option);
-        setIsOpen(false);
-    };
+const CustomSelect = ({ options, getSelected, label }: ICustomSelectProps): JSX.Element => {
 
     return (
-        <div className="custom-select">
-            <div className="select-trigger" onClick={toggleSelect}>
-                {selectedOption ? selectedOption.title : "all"}
-            </div>
-            <ul className={`select-options ${isOpen ? 'active' : ''}`}>
-                {options.map((option) => (
-                    <li
-                        key={option.title}
-                        value={option.title}
-                        onClick={() => selectOption(option)}
-                    >
-                        {option.title}
-                    </li>
+        <div className="form-floating">
+            <select onChange={(e) => getSelected(e.target.value)} className="form-select" id="floatingSelect" aria-label="Floating label select example">
+                {options.map((item) => (
+                    <option key={item.title} value={item.title}>{item.title.charAt(0).toUpperCase() + item.title.slice(1)}</option>
                 ))}
-            </ul>
+            </select>
+            <label htmlFor="floatingSelect">{label}</label>
         </div>
     );
 };

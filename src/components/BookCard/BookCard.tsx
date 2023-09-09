@@ -1,4 +1,3 @@
-import React from 'react'
 import './BookCard.scss'
 import { IBookCardProps } from './BookCard.props'
 import { useNavigate } from 'react-router-dom'

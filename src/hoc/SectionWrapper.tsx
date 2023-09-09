@@ -1,7 +1,7 @@
 const SectionWrapper = (Component: () => JSX.Element) => function HOC() {
     return (
         <section
-            style={{ padding: 6 }}
+            style={{ padding: 6, backgroundColor: 'white', marginBottom: 20}}
         >
             <Component />
         </section>

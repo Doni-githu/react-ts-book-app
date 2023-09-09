@@ -2,9 +2,12 @@ import React from 'react'
 import './BookCard.scss'
 import { IBookCardProps } from './BookCard.props'
 import { useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { setOneBook } from '../../reducers/book'
 
 function BookCard({ book }: IBookCardProps) {
   const navigate = useNavigate()
+  const dispatch = useDispatch()
   return (
     <div className="col">
       <div className="card shadow-sm">
@@ -23,6 +26,7 @@ function BookCard({ book }: IBookCardProps) {
           </div>
           <p className='card-title' style={{ cursor: 'pointer' }} onClick={() => {
             const id = book.id
+            dispatch(setOneBook(book))
             navigate(`/${id}`)
           }}>{book.volumeInfo.title}</p>
           {book.volumeInfo.authors ? <div>

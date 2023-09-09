@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, {AxiosError} from "axios";
 import { ISearchUtilProps } from "../interfaces/types";
 
 export default async function ({ term, length, orderBy, category }: ISearchUtilProps) {
@@ -17,6 +17,6 @@ export default async function ({ term, length, orderBy, category }: ISearchUtilP
         console.log(response.data);
         return response.data
     } catch (error) {
-        console.log(error);
+        throw new Error("Have a error")
     }
 }

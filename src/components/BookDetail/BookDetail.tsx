@@ -2,11 +2,12 @@ import { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import getOne from '../../utils/getOne';
 import { useDispatch, useSelector } from 'react-redux';
-import { startGetOneBook, successGetOneBook } from '../../reducers/book';
+import { successGetOneBook } from '../../reducers/book';
 import Base from '../../layouts/Base';
 import { RootState } from '../../store';
 import './BookDetail.scss'
 import word from '../../utils/word';
+import { SectionWrapper } from '../../hoc';
 
 
 
@@ -15,7 +16,6 @@ function BookDetail() {
   const dispatch = useDispatch()
   const book = useSelector((state: RootState) => state.book.book)
   useEffect(() => {
-    dispatch(startGetOneBook())
     getOne(String(params.id))
       .then((res) => {
         dispatch(successGetOneBook(res!))
@@ -43,4 +43,4 @@ function BookDetail() {
   )
 }
 
-export default BookDetail
+export default SectionWrapper(BookDetail)

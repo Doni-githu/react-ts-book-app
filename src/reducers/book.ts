@@ -31,6 +31,9 @@ const bookSlice = createSlice({
             state.books = action.payload
             state.isLoading = false
         },
+        setOneBook: (state: BookState, action: PayloadAction<IBook>) => {
+            state.book = action.payload
+        },
         setTerm: (state: BookState, action: PayloadAction<string>) => {
             state.term = action.payload
         },
@@ -55,11 +58,7 @@ const bookSlice = createSlice({
         failurGetBooks: (state: BookState) => {
             state.isLoading = false
         },
-        startGetOneBook: (state: BookState) => {
-            state.isLoading = true
-        },
         successGetOneBook: (state: BookState, action: PayloadAction<IBook>) => {
-            state.isLoading = false
             state.book = action.payload
         },
         failurGetBook: (state: BookState) => {
@@ -76,8 +75,8 @@ export const {
     startSearchBooks,
     setCategory,
     setOrder,
-    startGetOneBook,
     successGetOneBook,
-    failurGetBook
+    failurGetBook,
+    setOneBook
 } = bookSlice.actions;
 export default bookSlice.reducer;

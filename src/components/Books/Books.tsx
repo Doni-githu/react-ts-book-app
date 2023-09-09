@@ -27,7 +27,7 @@ function Books() {
             </div>
             {
                 book.books.totalItems !== 0 ? <>
-                    <div className="w-100 d-flex justify-content-center">
+                    <div style={{marginTop: '20px'}} className="w-100 d-flex justify-content-center">
                         <button className="btn btn-primary" onClick={async () => {
                             setIsLoading(true)
                             const payload: ISearchUtilProps = {
